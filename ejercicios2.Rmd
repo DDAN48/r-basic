@@ -1,0 +1,38 @@
+---
+title: "Multivariante"
+author: "Daniel Villarroel"
+date: '2022-07-08'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Datos multidimensionales 
+
+```{r}
+
+ans=sample(c('si','no'),size = 100, replace = T)
+sex=sample(c('female','male'),size = 100, replace = T)
+place=sample(c('San Francisco','Barcelona','Valencia','Cobija','Asturia'),size = 100, replace = T)
+table(sex,ans,place)
+ftable(sex,ans,place)
+```
+
+## Filtros
+
+```{r}
+table(sex,ans,place)['male','si','San Francisco']
+```
+
+##Frecuencias Relativas
+
+```{r}
+prop.table(table(sex,ans,place))
+prop.table(table(sex,ans,place),margin=) #frecuencia relativa por lugar
+prop.table(table(sex,ans,place),margin=c(1,3)) #frecuencia relativa por lugar y sexo
+```
+
+
+
