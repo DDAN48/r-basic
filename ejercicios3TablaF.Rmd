@@ -16,8 +16,21 @@ print(2)
 import pandas as pd
 import numpy as pd
 import matplotlib
+import matplotlib.pyplot as plt 
+import numpy as np 
+import seaborn as sns
+from plotnine.data import diamonds
+
+
 
 ```
+```{python}
+TABLA=diamonds.head()
+```
+```{r}
+TABLA
+```
+
 
 
 

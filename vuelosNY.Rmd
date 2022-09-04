@@ -1,0 +1,78 @@
+---
+title: "VuelosNY"
+author: "Daniel Villarroel"
+date: "2022-08-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+```
+
+
+```{r pressure, echo=FALSE}
+data<- nycflights13::flights
+data
+head(data)
+summary(data)
+```
+
+
+```{python}
+import matplotlib.pyplot as plt 
+import pandas as pd
+datapy=r.data
+print(datapy.info())
+
+print('Aerolineas con mayor cantidad de vuelos ,retraso y razon de retraso en minutos por vuelo')
+
+data2=datapy.groupby('carrier').agg(delay=('dep_delay','sum'),countflight=('carrier','count'))
+
+
+
+totaldelay=data2.sum()
+data2['porcDelay']=(data2['delay']/totaldelay['delay'])*100
+data2['porcCarrier']=(data2['countflight']/totaldelay['countflight'])*100
+data2['razon']=data2['delay']/data2['countflight']
+data2.sort_values('countflight',ascending=[False]) 
+
+```
+
+```{python}
+print('como esta distribuido el retraso de salida en lo aeropuertos')
+distrRetrAer=datapy.pivot(columns='origin', values='dep_delay')
+
+data5=datapy.groupby('origin').agg(delay=('arr_delay','sum'),countflight=('carrier','count'))
+distrRetrAer.plot.density()
+#datapy['dep_delay'].dropna(axis=0).plot(kind='density')
+#datapy[datapy['origin']=='JFK']['dep_delay'].dropna(axis=0).hist(bins=100,edgecolor='black')
+plt.xlim(0,200)
+plt.title('Densidad de Retrasos Salida')
+plt.xlabel('Tiempo Retrasos')
+print('Densidad de Retrasos Salida 3 Aeropuertos de 0 a 200 minutos')
+print('Se puede observar que la densidad es la misma')
+plt.show()
+
+datapy[datapy['dep_delay']<800].boxplot(column='dep_delay',by='origin',figsize=(10,10))
+
+```
+```{python}
+import pandas as pd
+
+pd.crosstab(datapy['origin'],columns= datapy['dest'], aggfunc = "sum", values = datapy['dep_delay'])
+
+```
+
+
+
+```{python}
+data3=datapy.groupby(['origin','dest']).agg(delay=('dep_delay','sum'),countflight=('carrier','count'))
+data3['razon']=data3['delay']/data3['countflight']
+data3
+data4=data3[data3['razon']>20]
+data4
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

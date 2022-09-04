@@ -1,0 +1,49 @@
+---
+title: "ejercico3TablasF"
+author: "Daniel Villarroel"
+date: '2022-07-08'
+output: html_document
+---
+```{r setup , include=FALSE}
+library(reticulate) #necesario para conectar R y Python
+
+```
+
+```{python}
+print(2)
+
+import pandas as pd
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt 
+import numpy as np 
+import seaborn as sns
+from plotnine.data import diamonds
+
+
+
+```
+```{python}
+pokemon=pd.read_csv('./data/Pokemon.csv')
+pokemon.head()
+pokemonLegen=pokemon[pokemon['Legendary']==True]
+#POKEMON LEGENDARIOS
+pokemonLegen=pokemonLegen.dropna()
+pokemonLegen.shape
+
+
+```
+##transmisión de los datos de Python a R, HAY QUE USAR PY
+```{r}
+
+py$pokemonLegen[,'Speed']
+hist(py$pokemonLegen[,'Speed'])
+
+```
+
+
+
+
+
+
+
